@@ -7,7 +7,9 @@ interface IAuthContext {
   currentUser: User | null | undefined;
 }
 
-const AuthContext = createContext<IAuthContext>({ currentUser: undefined });
+export const AuthContext = createContext<IAuthContext>({
+  currentUser: undefined,
+});
 
 interface IProps {
   children: React.ReactNode;
@@ -19,8 +21,7 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
   );
 
   useEffect(() => {
-    // eslint-disable-next-line prettier/prettier
-    auth.onAuthStateChanged(user => {
+    auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
     });
   }, []);
@@ -36,4 +37,4 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
   );
 };
 
-export { AuthContext, AuthProvider };
+export default AuthProvider;

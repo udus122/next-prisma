@@ -25,8 +25,7 @@ async function main() {
 }
 
 main()
-  // eslint-disable-next-line prettier/prettier
-  .catch(e => {
+  .catch((e) => {
     throw e;
   })
   .finally(async () => {
