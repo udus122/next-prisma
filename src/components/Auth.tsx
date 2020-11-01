@@ -5,10 +5,12 @@ import { auth } from '../libs/firebase';
 // Contextの型を用意
 interface IAuthContext {
   currentUser: User | null | undefined;
+  isInitialized: boolean;
 }
 
 export const AuthContext = createContext<IAuthContext>({
   currentUser: undefined,
+  isInitialized: false,
 });
 
 interface IProps {
@@ -19,10 +21,12 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null | undefined>(
     undefined,
   );
+  const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
+      setIsInitialized(true);
     });
   }, []);
 
@@ -30,6 +34,7 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
     <AuthContext.Provider
       value={{
         currentUser: currentUser,
+        isInitialized: isInitialized,
       }}
     >
       {children}
