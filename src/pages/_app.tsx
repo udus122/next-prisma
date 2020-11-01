@@ -1,10 +1,18 @@
-import { AppProps } from 'next/app';
-import Head from 'next/head';
 import * as React from 'react';
-import AuthProvider from '../components/Auth';
-import '../styles/globals.css';
+import Head from 'next/head';
+import { AppProps } from 'next/app';
+import { CssBaseline, StylesProvider } from '@material-ui/core';
+import AuthProvider from '@/components/Auth';
+import Header from '@/components/Header';
 
-const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
+const App = ({ Component, pageProps }: AppProps) => {
+  React.useEffect(() => {
+    const jssStyles = document.querySelector('#jss-server-side');
+    jssStyles &&
+      jssStyles.parentElement &&
+      jssStyles.parentElement.removeChild(jssStyles);
+  }, []);
+
   return (
     <React.Fragment>
       <Head>
@@ -13,12 +21,15 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }: AppProps) => {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-
-      <AuthProvider>
-        <Component {...pageProps} />
-      </AuthProvider>
+      <CssBaseline />
+      <StylesProvider injectFirst>
+        <AuthProvider>
+          <Header />
+          <Component {...pageProps} />
+        </AuthProvider>
+      </StylesProvider>
     </React.Fragment>
   );
 };
 
-export default MyApp;
+export default App;
