@@ -15,6 +15,7 @@ const SignIn: React.FC = () => {
 
   const handleClickGoogleSignOut = () => {
     firebase.auth().signOut();
+    auth.signOut();
   };
 
   return (
@@ -23,7 +24,7 @@ const SignIn: React.FC = () => {
       {auth.isInitialized &&
         (auth.currentUser ? (
           <p>
-            Your name: {String(auth.currentUser?.displayName)}
+            Your name: {auth.currentUser.name}
             <Button
               variant="contained"
               color="secondary"
