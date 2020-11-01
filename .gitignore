@@ -37,3 +37,5 @@ yarn-error.log*
 prisma/.env
 # vscode
 .vscode
+
+cloud_sql_proxy
