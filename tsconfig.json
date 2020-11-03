@@ -2,14 +2,10 @@
   "strict": true,
   "compilerOptions": {
     "target": "es2018",
-    "module": "umd",
+    "module": "esnext",
     "sourceMap": true,
     "outDir": "dist",
-    "lib": [
-      "es2015",
-      "esnext",
-      "dom"
-    ],
+    "lib": ["es2015", "esnext", "dom"],
     "allowJs": false,
     "skipLibCheck": true,
     "strict": true,
@@ -18,20 +14,15 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "isolatedModules": true,
+    "resolveJsonModule": true,
     "jsx": "preserve",
     "baseUrl": "./",
     "typeRoots": ["./node_modules/@types"],
     "types": ["node"],
     "paths": {
       "@/*": ["src/*"]
-    },
+    }
   },
-  "exclude": [
-    "node_modules"
-  ],
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ]
+  "exclude": ["node_modules"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }
