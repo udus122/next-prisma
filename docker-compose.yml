@@ -1,0 +1,15 @@
+version: '3'
+services:
+  cloudsql:
+    image: gcr.io/cloudsql-docker/gce-proxy:1.16
+    volumes:
+      - ./cloudsql-service-account-key.json:/config
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+    command:
+      [
+        '/cloud_sql_proxy',
+        '-instances=next-prisma:asia-northeast1:prisma=tcp:0.0.0.0:5432',
+        '-credential_file=/config',
+      ]

@@ -39,5 +39,6 @@ prisma/.env
 .vscode
 
 cloud_sql_proxy
+cloudsql-service-account-key.json
 
 firebase-config-key.json
