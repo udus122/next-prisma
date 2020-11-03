@@ -9,6 +9,7 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  console.log(req);
   const result = await prisma.user.create({
     data: {
       ...req.body,
