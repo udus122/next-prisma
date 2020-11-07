@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as functions from 'firebase-functions';
-import { PrismaClient, User } from '@prisma/client';
+import { Post, PrismaClient, User } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export interface IGetUserData {

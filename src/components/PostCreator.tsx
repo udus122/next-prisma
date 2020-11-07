@@ -17,9 +17,8 @@ const PostCreator: React.FC = () => {
             validationSchema={Yup.object({
               content: Yup.string().required('Required'),
             })}
-            onSubmit={(values, { setSubmitting, resetForm }) => {
-              console.log('values:', values);
-              createPost({
+            onSubmit={async (values, { setSubmitting, resetForm }) => {
+              await createPost({
                 content: values.content,
                 authorId: currentUser.id,
               });
