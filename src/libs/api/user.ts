@@ -1,14 +1,11 @@
 import { IUserBody } from '@/libs/model/user';
+import { functions } from '@/libs/firebase';
 
 export const create = async (body: IUserBody) => {
   try {
-    const res = await fetch('http://localhost:3000/api/user', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
-    const data = await res.json();
-    console.log(data);
+    const func = functions.httpsCallable('createUser');
+    const result = await func(body);
+    console.log(result);
   } catch (e) {
     console.log(e);
   }
