@@ -2,8 +2,9 @@ import * as React from 'react';
 import { GetStaticProps } from 'next';
 import styled from '@emotion/styled';
 import { getList as getPostList } from '@/libs/api/post';
-import SignIn from '@/components/SignIn';
 import { IPost } from '@/libs/model/post';
+import SignIn from '@/components/SignIn';
+import PostList from '@/components/PostList';
 
 const Container = styled.div({
   margin: '16px',
@@ -15,11 +16,11 @@ interface IProps {
 }
 
 const Index: React.FC<IProps> = ({ posts }) => {
-  console.log(posts);
   return (
     <Container>
       <h1>Hello next-prisma</h1>
       <SignIn />
+      <PostList posts={posts} />
     </Container>
   );
 };
