@@ -1,18 +1,20 @@
 import { User } from 'firebase';
 
 export interface IUser {
+  id: number;
   email: string;
   name: string;
   avatarUrl: string;
 }
 
-// export type IUserBody = Omit<IUser, 'id'>;
-export type IUserBody = IUser;
+export type IGetParams = Pick<IUser, 'email'>;
 
-export const convertAuthInfoToUser = (authInfo: User): IUser => {
+export type IUserBody = Omit<IUser, 'id'>;
+
+export const buildUserBodyFromAuthInfo = (authInfo: User): IUserBody => {
   return {
-    email: authInfo.email ? authInfo.email : '',
-    name: authInfo.displayName ? authInfo.displayName : '',
-    avatarUrl: authInfo.photoURL ? authInfo.photoURL : '',
+    email: authInfo.email || '',
+    name: authInfo.displayName || '',
+    avatarUrl: authInfo.photoURL || '',
   };
 };

@@ -6,8 +6,6 @@ import * as React from 'react';
 const SignIn: React.FC = () => {
   const auth = React.useContext(AuthContext);
 
-  console.log(auth);
-
   const handleClickGoogleSignIn = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     firebase.auth().signInWithRedirect(provider);

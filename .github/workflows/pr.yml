@@ -1,0 +1,28 @@
+name: PR
+
+on: pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@master
+      - name: Decrypt secrets
+        run: |
+          echo $FIREBASE_CONFIG_KEY_DEV | base64 -d > ./src/app/firebase-config-key.json
+          echo $SERVICE_ACCOUNT_KEY_DEV | base64 -d > ./src/functions/service-account-key.json
+          echo $DOT_ENV_DEV | base64 -d > ./src/app/.env
+        env:
+          FIREBASE_CONFIG_KEY_DEV: ${{ secrets.FIREBASE_CONFIG_KEY_DEV }}
+          SERVICE_ACCOUNT_KEY_DEV: ${{ secrets.SERVICE_ACCOUNT_KEY_DEV }}
+          DOT_ENV_DEV: ${{ secrets.DOT_ENV_DEV }}
+      - name: Use Node.js 10.13.0
+        uses: actions/setup-node@master
+        with:
+          node-version: 10.13.0
+      - name: Install packages
+        run: |
+          yarn install
+      - name: Build
+        run: yarn preserve
