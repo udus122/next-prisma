@@ -10,19 +10,21 @@ jobs:
         uses: actions/checkout@master
       - name: Decrypt secrets
         run: |
-          echo $FIREBASE_CONFIG_KEY_DEV | base64 -d > ./src/app/firebase-config-key.json
-          echo $SERVICE_ACCOUNT_KEY_DEV | base64 -d > ./src/functions/service-account-key.json
-          echo $DOT_ENV_DEV | base64 -d > ./src/app/.env
+          echo $PRISMA_DOT_ENV | base64 -d > ./functions/prisma/.env
         env:
-          FIREBASE_CONFIG_KEY_DEV: ${{ secrets.FIREBASE_CONFIG_KEY_DEV }}
-          SERVICE_ACCOUNT_KEY_DEV: ${{ secrets.SERVICE_ACCOUNT_KEY_DEV }}
-          DOT_ENV_DEV: ${{ secrets.DOT_ENV_DEV }}
-      - name: Use Node.js 10.13.0
+          PRISMA_DOT_ENV: ${{ secrets.PRISMA_DOT_ENV }}
+      - name: Use Node.js 10.23.0
         uses: actions/setup-node@master
         with:
-          node-version: 10.13.0
-      - name: Install packages
+          node-version: 10.23.0
+      - name: Build and install firebase-tools
         run: |
-          yarn install
-      - name: Build
-        run: yarn preserve
+          cd ./functions
+          npm install
+          npm run build
+          npm install --save-dev firebase-tools
+      - name: deploy
+        run: |
+          ./functions/node_modules/.bin/firebase deploy --only functions --token $FUNCTION_DEV_DEPLOY_TOKEN
+        env:
+          FUNCTION_DEV_DEPLOY_TOKEN: ${{ secrets.FUNCTION_DEV_DEPLOY_TOKEN }}

@@ -1,6 +1,6 @@
 name: Master
 
-on: push:
+on: push
 
 jobs:
   build:
