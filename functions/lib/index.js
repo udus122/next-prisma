@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUser = exports.getUser = void 0;
+exports.getPostList = exports.createUser = exports.getUser = void 0;
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 const functions = require("firebase-functions");
@@ -27,6 +27,15 @@ exports.createUser = functions.https.onCall(async (data, context) => {
         const result = await prisma.user.create({
             data,
         });
+        return result;
+    }
+    catch (e) {
+        throw new functions.https.HttpsError('internal', e.message, e);
+    }
+});
+exports.getPostList = functions.https.onCall(async () => {
+    try {
+        const result = await prisma.post.findMany();
         return result;
     }
     catch (e) {

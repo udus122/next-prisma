@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as functions from 'firebase-functions';
-import { PrismaClient, User } from '@prisma/client';
+import { Post, PrismaClient, User } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export interface IGetUserData {
@@ -44,6 +44,17 @@ export const createUser = functions.https.onCall(
       const result: User = await prisma.user.create({
         data,
       });
+      return result;
+    } catch (e) {
+      throw new functions.https.HttpsError('internal', e.message, e);
+    }
+  },
+);
+
+export const getPostList = functions.https.onCall(
+  async (): Promise<Post[]> => {
+    try {
+      const result: Post[] = await prisma.post.findMany();
       return result;
     } catch (e) {
       throw new functions.https.HttpsError('internal', e.message, e);

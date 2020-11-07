@@ -1,13 +1,19 @@
-import SignIn from '@/components/SignIn';
 import * as React from 'react';
+import styled from '@emotion/styled';
+import SignIn from '@/components/SignIn';
 
-const Home: React.FC = () => {
+const Container = styled.div({
+  margin: '16px',
+  padding: '16px',
+});
+
+const Index: React.FC = () => {
   return (
-    <React.Fragment>
+    <Container>
       <h1>Hello next-prisma</h1>
       <SignIn />
-    </React.Fragment>
+    </Container>
   );
 };
 
-export default Home;
+export default Index;
