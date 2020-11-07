@@ -42,7 +42,7 @@ export default function MenuAppBar() {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" css={titleStyle}>
-          Photos
+          Bulletin board
         </Typography>
         {auth.currentUser && (
           <div>
