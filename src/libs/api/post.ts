@@ -18,7 +18,11 @@ export const createPost = async (body: IPostBody): Promise<IPost> => {
   try {
     const func = functions.httpsCallable('createPost');
     const result = await func(body);
-    return result.data as IPost;
+    console.log(result);
+    return {
+      ...result.data,
+      createdAt: new Date(result.data.createdAt),
+    } as IPost;
   } catch (e) {
     throw new Error(e);
   }

@@ -66,6 +66,7 @@ export const getPostList = functions.https.onCall(
     try {
       const result = await prisma.post.findMany({
         include: { author: true },
+        orderBy: { createdAt: 'desc' },
       });
       return result.map((post) => ({
         ...post,
@@ -81,18 +82,22 @@ export const createPost = functions.https.onCall(
   async (
     data: ICreatePostData,
     context: functions.https.CallableContext,
-  ): Promise<Post> => {
+  ): Promise<IPost> => {
     try {
       const { content, authorId } = data;
-      const result: Post = await prisma.post.create({
+      const result = await prisma.post.create({
         data: {
           content,
           author: {
             connect: { id: authorId },
           },
         },
+        include: { author: true },
       });
-      return result;
+      return {
+        ...result,
+        createdAt: String(result.createdAt),
+      };
     } catch (e) {
       throw new functions.https.HttpsError('internal', e.message, e);
     }

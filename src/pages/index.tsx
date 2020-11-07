@@ -13,15 +13,19 @@ const Container = styled.div({
 });
 
 interface IProps {
-  posts: IPost[];
+  initialPosts: IPost[];
 }
 
-const Index: React.FC<IProps> = ({ posts }) => {
+const Index: React.FC<IProps> = ({ initialPosts }) => {
+  const [posts, setPosts] = React.useState<IPost[]>(initialPosts);
+  const addNewPost = (post: IPost) => {
+    setPosts([post, ...posts]);
+  };
   return (
     <Container>
       <h1>Hello next-prisma</h1>
       <SignIn />
-      <PostCreator />
+      <PostCreator addNewPost={addNewPost} />
       <PostList posts={posts} />
     </Container>
   );
@@ -31,7 +35,7 @@ export const getStaticProps: GetStaticProps<IProps> = async () => {
   const posts = await getPostList();
   return {
     props: {
-      posts,
+      initialPosts: posts,
     },
     revalidate: 1, // In seconds
   };
