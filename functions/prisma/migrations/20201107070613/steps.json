@@ -1,0 +1,21 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "DeleteField",
+      "model": "Post",
+      "field": "title"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "Post",
+      "field": "published"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "Post",
+      "field": "content",
+      "arity": "Required"
+    }
+  ]
+}
