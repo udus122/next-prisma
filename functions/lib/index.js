@@ -35,7 +35,9 @@ exports.createUser = functions.https.onCall(async (data, context) => {
 });
 exports.getPostList = functions.https.onCall(async () => {
     try {
-        const result = await prisma.post.findMany();
+        const result = await prisma.post.findMany({
+            include: { author: true },
+        });
         return result.map((post) => (Object.assign(Object.assign({}, post), { createdAt: String(post.createdAt) })));
     }
     catch (e) {

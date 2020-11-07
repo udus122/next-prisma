@@ -5,8 +5,10 @@ export const getList = async (): Promise<IPost[]> => {
   try {
     const func = functions.httpsCallable('getPostList');
     const result = await func();
-    console.log(result);
-    return result.data as IPost[];
+    return result.data.map((post: IPost) => ({
+      ...post,
+      createdAt: new Date(post.createdAt),
+    }));
   } catch (e) {
     throw new Error(e);
   }

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as functions from 'firebase-functions';
-import { Post, PrismaClient, User } from '@prisma/client';
+import { PrismaClient, User } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export interface IGetUserData {
@@ -19,6 +19,7 @@ export interface IPost {
   createdAt: string;
   content: string;
   authorId: number;
+  author: User;
 }
 
 export type ICreatePostData = Pick<Post, 'content' | 'authorId'>;
@@ -63,7 +64,9 @@ export const createUser = functions.https.onCall(
 export const getPostList = functions.https.onCall(
   async (): Promise<IPost[]> => {
     try {
-      const result: Post[] = await prisma.post.findMany();
+      const result = await prisma.post.findMany({
+        include: { author: true },
+      });
       return result.map((post) => ({
         ...post,
         createdAt: String(post.createdAt),
