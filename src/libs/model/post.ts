@@ -7,4 +7,7 @@ export interface IPost {
   author: IUser;
 }
 
-export type IPostBody = Omit<IPost, 'id'>;
+export interface IPostBody {
+  content: string;
+  authorId: number;
+}

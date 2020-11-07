@@ -1686,36 +1686,6 @@
   dependencies:
     mkdirp "^1.0.4"
 
-"@prisma/bar@^0.0.0":
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/@prisma/bar/-/bar-0.0.0.tgz#9daff159a1a09abf7665a8b6e40ddc1fdc1ed4f7"
-  integrity sha512-3nez9n/vMyAr4+nmqj6Xh3cGZbreYHr3RWX0vgtrFRpiN6otuCzL+9HW8MW/DfZNuFz5YyIdfwnRSPueUZPoWQ==
-
-"@prisma/cli@^2.10.1":
-  version "2.10.1"
-  resolved "https://registry.yarnpkg.com/@prisma/cli/-/cli-2.10.1.tgz#e99ebff7290e27c13062543f464f169448e5587c"
-  integrity sha512-I+51GBJyuGS5xsCl8pf4XfTt9HIdhCJQoaGCA9KLDzVRbFHElMQ++hhyhLohJ4buFZlSagIq8NI8yIC5yu+Wkg==
-  dependencies:
-    "@prisma/bar" "^0.0.0"
-    "@prisma/engines" "2.10.1-6-7d0087eadc7265e12d4b8d8c3516b02c4c965111"
-
-"@prisma/client@^2.10.1":
-  version "2.10.1"
-  resolved "https://registry.yarnpkg.com/@prisma/client/-/client-2.10.1.tgz#96fe79ad0d7763d0eda1ea91870a8882e4dbb21f"
-  integrity sha512-VwasxCCwdRmrcVVoLwXTEbwrBiqOYr2Umqw9btvMvHGRhA1nRKCvmt7SCiCjGrx6CuC8eCG/HGxruv04001YKQ==
-  dependencies:
-    "@prisma/engines-version" "2.10.1-6-7d0087eadc7265e12d4b8d8c3516b02c4c965111"
-
-"@prisma/engines-version@2.10.1-6-7d0087eadc7265e12d4b8d8c3516b02c4c965111":
-  version "2.10.1-6-7d0087eadc7265e12d4b8d8c3516b02c4c965111"
-  resolved "https://registry.yarnpkg.com/@prisma/engines-version/-/engines-version-2.10.1-6-7d0087eadc7265e12d4b8d8c3516b02c4c965111.tgz#7f96aa61085fc803f81b3df0fa32297909ce4b08"
-  integrity sha512-OuOSTvEzXJwCJzNqZ9N/+J3lO64HgX9uGiVOuvlTrRSXoLZk0Q2IiLAx8qhY1U7jPpHJ7LTlZuGNScimqonpJg==
-
-"@prisma/engines@2.10.1-6-7d0087eadc7265e12d4b8d8c3516b02c4c965111":
-  version "2.10.1-6-7d0087eadc7265e12d4b8d8c3516b02c4c965111"
-  resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-2.10.1-6-7d0087eadc7265e12d4b8d8c3516b02c4c965111.tgz#614e82316270333d31a1581e533ef0c275b2b5f6"
-  integrity sha512-F/I8mmYMQnEFX47jl7Su8Pmvpua1wti9Uq3IUlSCqLQsrOmuMj+GKQ5nYEewmcynqBlyVcpUyxF5iAWbmUVdjw==
-
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@protobufjs/aspromise/-/aspromise-1.1.2.tgz#9b8b0cc663d669a7d8f6f5d0893a14d348f30fbf"
@@ -4895,6 +4865,11 @@ form-data@~2.3.2:
     asynckit "^0.4.0"
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
+
+formik-material-ui@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/formik-material-ui/-/formik-material-ui-3.0.0.tgz#70d987f58dbf51fe11118a4ca26f5f61613133bd"
+  integrity sha512-JJ8E/BPFhCxSl1HHgCCEiZqHAPb0lR4xB1Am23530cRKBO+nQy9FmlmWjRhGlkO7g0ak0eDVOR8f2pXton0HsQ==
 
 formik@^2.2.1:
   version "2.2.1"

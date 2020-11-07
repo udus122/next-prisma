@@ -21,6 +21,8 @@ export interface IPost {
   authorId: number;
 }
 
+export type ICreatePostData = Pick<Post, 'content' | 'authorId'>;
+
 export const getUser = functions.https.onCall(
   async (
     data: IGetUserData,
@@ -66,6 +68,28 @@ export const getPostList = functions.https.onCall(
         ...post,
         createdAt: String(post.createdAt),
       }));
+    } catch (e) {
+      throw new functions.https.HttpsError('internal', e.message, e);
+    }
+  },
+);
+
+export const createPost = functions.https.onCall(
+  async (
+    data: ICreatePostData,
+    context: functions.https.CallableContext,
+  ): Promise<Post> => {
+    try {
+      const { content, authorId } = data;
+      const result: Post = await prisma.post.create({
+        data: {
+          content,
+          author: {
+            connect: { id: authorId },
+          },
+        },
+      });
+      return result;
     } catch (e) {
       throw new functions.https.HttpsError('internal', e.message, e);
     }

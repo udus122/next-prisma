@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { getList as getPostList } from '@/libs/api/post';
 import SignIn from '@/components/SignIn';
 import { IPost } from '@/libs/model/post';
+import PostCreator from '@/components/PostCreator';
 
 const Container = styled.div({
   margin: '16px',
@@ -20,6 +21,7 @@ const Index: React.FC<IProps> = ({ posts }) => {
     <Container>
       <h1>Hello next-prisma</h1>
       <SignIn />
+      <PostCreator />
     </Container>
   );
 };
