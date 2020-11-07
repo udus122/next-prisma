@@ -14,6 +14,13 @@ export interface ICreateUserData {
   avatarUrl: string;
 }
 
+export interface IPost {
+  id: number;
+  createdAt: string;
+  content: string;
+  authorId: number;
+}
+
 export const getUser = functions.https.onCall(
   async (
     data: IGetUserData,
@@ -52,10 +59,13 @@ export const createUser = functions.https.onCall(
 );
 
 export const getPostList = functions.https.onCall(
-  async (): Promise<Post[]> => {
+  async (): Promise<IPost[]> => {
     try {
       const result: Post[] = await prisma.post.findMany();
-      return result;
+      return result.map((post) => ({
+        ...post,
+        createdAt: String(post.createdAt),
+      }));
     } catch (e) {
       throw new functions.https.HttpsError('internal', e.message, e);
     }

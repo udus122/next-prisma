@@ -36,7 +36,7 @@ exports.createUser = functions.https.onCall(async (data, context) => {
 exports.getPostList = functions.https.onCall(async () => {
     try {
         const result = await prisma.post.findMany();
-        return result;
+        return result.map((post) => (Object.assign(Object.assign({}, post), { createdAt: String(post.createdAt) })));
     }
     catch (e) {
         throw new functions.https.HttpsError('internal', e.message, e);
