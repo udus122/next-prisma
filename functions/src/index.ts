@@ -18,6 +18,7 @@ export interface IPost {
   id: number;
   createdAt: string;
   content: string;
+  authorId: number;
   author: User;
 }
 

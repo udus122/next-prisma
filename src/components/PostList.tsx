@@ -22,13 +22,10 @@ const PostList: React.FC<IProps> = ({ posts }) => {
           <React.Fragment key={post.id}>
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
-                <Avatar
-                  alt={'post.author.name'}
-                  src={'post.author.avatarUrl'}
-                />
+                <Avatar alt={post.author.name} src={post.author.avatarUrl} />
               </ListItemAvatar>
               <ListItemText
-                primary={`post.author.name ${dayjs(post.createdAt).format(
+                primary={`${post.author.name} ${dayjs(post.createdAt).format(
                   'YYYY-MM-DD HH:mm',
                 )}`}
                 secondary={
