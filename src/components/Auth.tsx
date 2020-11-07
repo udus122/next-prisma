@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { auth } from '@/libs/firebase';
-import { IUser, convertAuthInfoToUser } from '@/libs/model/user';
-import { create as createUser } from '@/libs/api/user';
+import { IUser, buildUserBodyFromAuthInfo } from '@/libs/model/user';
+import { create as createUser, get as getUser } from '@/libs/api/user';
 
 interface IAuthContext {
   currentUser: IUser | null | undefined;
@@ -34,19 +34,29 @@ const AuthProvider: React.FC<IProps> = ({ children }) => {
     auth
       .getRedirectResult()
       .then(async (result) => {
-        if (result.additionalUserInfo?.isNewUser && result.user) {
-          const newUser = convertAuthInfoToUser(result.user);
-          await createUser(newUser);
+        if (result.user && result.additionalUserInfo?.isNewUser) {
+          const newUser = await createUser(
+            buildUserBodyFromAuthInfo(result.user),
+          );
+          if (newUser === undefined) {
+            throw new Error();
+          }
+          setCurrentUser(newUser);
+          setIsInitialized(true);
         }
       })
       .catch((error) => {
         console.log(error);
       });
-    auth.onAuthStateChanged((user) => {
-      console.log(user);
-      user && setCurrentUser(convertAuthInfoToUser(user));
-      setIsInitialized(true);
-    });
+    if (!isInitialized) {
+      auth.onAuthStateChanged(async (user) => {
+        if (user && user.email) {
+          const authUser = await getUser({ email: user.email });
+          setCurrentUser(authUser);
+        }
+        setIsInitialized(true);
+      });
+    }
   }, []);
 
   return (
