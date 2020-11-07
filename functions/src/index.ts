@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as functions from 'firebase-functions';
-import { PrismaClient, User } from '@prisma/client';
+import { Post, PrismaClient, User } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export interface IGetUserData {
@@ -21,6 +21,8 @@ export interface IPost {
   authorId: number;
   author: User;
 }
+
+export type ICreatePostData = Pick<Post, 'content' | 'authorId'>;
 
 export const getUser = functions.https.onCall(
   async (
@@ -64,11 +66,38 @@ export const getPostList = functions.https.onCall(
     try {
       const result = await prisma.post.findMany({
         include: { author: true },
+        orderBy: { createdAt: 'desc' },
       });
       return result.map((post) => ({
         ...post,
         createdAt: String(post.createdAt),
       }));
+    } catch (e) {
+      throw new functions.https.HttpsError('internal', e.message, e);
+    }
+  },
+);
+
+export const createPost = functions.https.onCall(
+  async (
+    data: ICreatePostData,
+    context: functions.https.CallableContext,
+  ): Promise<IPost> => {
+    try {
+      const { content, authorId } = data;
+      const result = await prisma.post.create({
+        data: {
+          content,
+          author: {
+            connect: { id: authorId },
+          },
+        },
+        include: { author: true },
+      });
+      return {
+        ...result,
+        createdAt: String(result.createdAt),
+      };
     } catch (e) {
       throw new functions.https.HttpsError('internal', e.message, e);
     }
