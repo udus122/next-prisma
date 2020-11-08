@@ -6,6 +6,7 @@ import { IPost } from '@/libs/model/post';
 import PostCreator from '@/components/PostCreator';
 import SignIn from '@/components/SignIn';
 import PostList from '@/components/PostList';
+import useSWR from 'swr';
 
 const Container = styled.div({
   margin: '16px',
@@ -17,16 +18,16 @@ interface IProps {
 }
 
 const Index: React.FC<IProps> = ({ initialPosts }) => {
-  const [posts, setPosts] = React.useState<IPost[]>(initialPosts);
-  const addNewPost = (post: IPost) => {
-    setPosts([post, ...posts]);
-  };
+  const { data: posts } = useSWR('/api/post', getPostList, {
+    initialData: initialPosts,
+  });
+
   return (
     <Container>
       <h1>Hello next-prisma</h1>
       <SignIn />
-      <PostCreator addNewPost={addNewPost} />
-      <PostList posts={posts} />
+      <PostCreator />
+      {posts && <PostList posts={posts} />}
     </Container>
   );
 };
