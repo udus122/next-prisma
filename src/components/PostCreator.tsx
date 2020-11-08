@@ -6,7 +6,7 @@ import { Button, Card } from '@material-ui/core';
 import { Field, Form, Formik } from 'formik';
 import { AuthContext } from '@/components/Auth';
 import { createPost } from '@/libs/api/post';
-import { IPost } from '@/libs/model/post';
+import { mutate } from 'swr';
 
 const FormContainer = styled.div({
   display: 'flex',
@@ -18,12 +18,9 @@ const FormContainer = styled.div({
   },
 });
 
-interface IProps {
-  addNewPost: (post: IPost) => void;
-}
-
-const PostCreator: React.FC<IProps> = ({ addNewPost }) => {
+const PostCreator: React.FC = () => {
   const { currentUser } = React.useContext(AuthContext);
+
   return (
     <React.Fragment>
       {currentUser && (
@@ -34,11 +31,11 @@ const PostCreator: React.FC<IProps> = ({ addNewPost }) => {
               content: Yup.string().required('Required'),
             })}
             onSubmit={async (values, { setSubmitting, resetForm }) => {
-              const createdPost = await createPost({
+              await createPost({
                 content: values.content,
                 authorId: currentUser.id,
               });
-              addNewPost(createdPost);
+              mutate('/api/post');
               setSubmitting(false);
               resetForm();
             }}

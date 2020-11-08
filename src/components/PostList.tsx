@@ -9,41 +9,41 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import { cache } from 'swr';
 
-interface IProps {
-  posts: IPost[];
-}
+const PostList: React.FC = () => {
+  const posts: IPost[] = cache.get('/api/post');
 
-const PostList: React.FC<IProps> = ({ posts }) => {
   return (
     <Paper>
       <List>
-        {posts.map((post) => (
-          <React.Fragment key={post.id}>
-            <ListItem alignItems="flex-start">
-              <ListItemAvatar>
-                <Avatar alt={post.author.name} src={post.author.avatarUrl} />
-              </ListItemAvatar>
-              <ListItemText
-                primary={`${post.author.name} ${dayjs(post.createdAt).format(
-                  'YYYY-MM-DD HH:mm',
-                )}`}
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      color="textPrimary"
-                    >
-                      {post.content}
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-            <Divider variant="inset" component="li" />
-          </React.Fragment>
-        ))}
+        {posts &&
+          posts.map((post) => (
+            <React.Fragment key={post.id}>
+              <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                  <Avatar alt={post.author.name} src={post.author.avatarUrl} />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={`${post.author.name} ${dayjs(post.createdAt).format(
+                    'YYYY-MM-DD HH:mm',
+                  )}`}
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        component="span"
+                        variant="body2"
+                        color="textPrimary"
+                      >
+                        {post.content}
+                      </Typography>
+                    </React.Fragment>
+                  }
+                />
+              </ListItem>
+              <Divider variant="inset" component="li" />
+            </React.Fragment>
+          ))}
       </List>
     </Paper>
   );
