@@ -18,7 +18,7 @@ interface IProps {
 }
 
 const Index: React.FC<IProps> = ({ initialPosts }) => {
-  const { data: posts } = useSWR('/api/post', getPostList, {
+  useSWR('/api/post', getPostList, {
     initialData: initialPosts,
   });
 
@@ -27,7 +27,7 @@ const Index: React.FC<IProps> = ({ initialPosts }) => {
       <h1>Hello next-prisma</h1>
       <SignIn />
       <PostCreator />
-      {posts && <PostList posts={posts} />}
+      <PostList />
     </Container>
   );
 };

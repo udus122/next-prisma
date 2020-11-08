@@ -9,12 +9,11 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import { cache } from 'swr';
 
-interface IProps {
-  posts: IPost[];
-}
+const PostList: React.FC = () => {
+  const posts: IPost[] = cache.get('/api/post');
 
-const PostList: React.FC<IProps> = ({ posts }) => {
   return (
     <Paper>
       <List>
